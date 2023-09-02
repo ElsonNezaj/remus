@@ -1,0 +1,35 @@
+.navigationContainer {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  gap: 25px;
+}
+
+.navigationItem {
+  font-size: 20px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.2s;
+
+  &:hover {
+    color: #ffc220;
+  }
+
+  &::after {
+    content: "";
+    display: block;
+    width: 0;
+    height: 1px;
+    background: #ffc220;
+    transition: width 0.2s ease-in;
+  }
+
+  &:hover::after {
+    width: 100%;
+  }
+}
+
+.span {
+  margin: 0px 5px 0px 5px;
+  color: #007dc6;
+}
