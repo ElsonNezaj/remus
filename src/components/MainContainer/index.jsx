@@ -1,8 +1,8 @@
 import React from "react";
 
 import styles from "./styles.module.scss";
-import { Typography } from "antd";
 import HeaderContainer from "../Header/Container";
+import Landing from "../Landing";
 
 export default function MainContainer() {
   return (
@@ -11,7 +11,7 @@ export default function MainContainer() {
         <HeaderContainer />
       </div>
       <div className={styles.landingBody}>
-        <Typography>Landing Body</Typography>
+        <Landing />
       </div>
     </div>
   );
