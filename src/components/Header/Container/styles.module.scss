@@ -1,0 +1,25 @@
+.headerContainer {
+  height: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.emptyDiv {
+  width: 25%;
+}
+
+.logoContainer {
+  display: flex;
+  justify-content: center;
+  width: 50%;
+}
+
+.appLogo {
+  width: 350px;
+}
+
+.navigationContainer {
+  width: 25%;
+}
