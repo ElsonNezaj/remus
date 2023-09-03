@@ -4,6 +4,7 @@ import styles from "./styles.module.scss";
 import HeaderContainer from "./components/Header/Container";
 import Landing from "./components/Landing";
 import { Route, Switch } from "react-router-dom";
+import RegisterForm from "./components/RegisterForm";
 
 export default function MainContainer() {
   return (
@@ -15,6 +16,9 @@ export default function MainContainer() {
         <Switch>
           <Route path="/" exact>
             <Landing />
+          </Route>
+          <Route path="/register" exact>
+            <RegisterForm />
           </Route>
         </Switch>
       </div>
