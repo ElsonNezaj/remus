@@ -12,7 +12,7 @@
   transition: all 0.2s;
 
   &:hover {
-    color: #ffc220;
+    color: var(--main-yellow-color);
   }
 
   &::after {
@@ -20,7 +20,7 @@
     display: block;
     width: 0;
     height: 1px;
-    background: #ffc220;
+    background: var(--main-yellow-color);
     transition: width 0.2s ease-in;
   }
 
@@ -31,5 +31,5 @@
 
 .span {
   margin: 0px 5px 0px 5px;
-  color: #007dc6;
+  color: var(--main-blue-color);
 }

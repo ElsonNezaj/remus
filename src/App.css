@@ -1,3 +1,8 @@
+:root {
+  --main-blue-color: #007dc6;
+  --main-yellow-color: #ffc220;
+}
+
 .App {
   text-align: center;
   height: 100vh;
