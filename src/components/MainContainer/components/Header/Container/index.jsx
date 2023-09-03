@@ -1,7 +1,7 @@
 import React from "react";
 import styles from "./styles.module.scss";
 
-import logo from "../../../images/logo/Remus_Logo_H.svg";
+import logo from "../../../../../images/logo/Remus_Logo_H.svg";
 import Navigation from "../Navigation";
 import { Link } from "react-router-dom";
 import { Typography } from "antd";
