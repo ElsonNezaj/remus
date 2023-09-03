@@ -3,17 +3,19 @@ import styles from "./styles.module.scss";
 
 import logo from "../../../images/logo/Remus_Logo_H.svg";
 import Navigation from "../Navigation";
-import { Button } from "antd";
 import { Link } from "react-router-dom";
+import { Typography } from "antd";
 
 export default function HeaderContainer() {
   return (
     <div className={styles.headerContainer}>
       <div className={styles.register}>
-        <Link to="/register">
-          <Button shape="round" size="large" className={styles.registerButton}>
-            Register Business
-          </Button>
+        <Link to="/register" style={{ textDecoration: "none" }}>
+          <div className={styles.registerButton}>
+            <Typography className={styles.registerLabel}>
+              Register Business
+            </Typography>
+          </div>
         </Link>
       </div>
       <div className={styles.logoContainer}>
