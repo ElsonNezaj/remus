@@ -3,11 +3,14 @@ import styles from "./styles.module.scss";
 
 import logo from "../../../images/logo/Remus_Logo_H.svg";
 import Navigation from "../Navigation";
+import { Button } from "antd";
 
 export default function HeaderContainer() {
   return (
     <div className={styles.headerContainer}>
-      <div className={styles.emptyDiv}></div>
+      <div className={styles.register}>
+        <Button>Register Business</Button>
+      </div>
       <div className={styles.logoContainer}>
         <img src={logo} alt="Site Logo" className={styles.appLogo} />
       </div>
