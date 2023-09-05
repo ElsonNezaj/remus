@@ -15,12 +15,19 @@
 
     & > div {
       height: 100%;
+
+      & > div {
+        height: 100% !important;
+        & > div {
+          height: 100% !important;
+        }
+      }
     }
   }
-
   ul {
     height: 10px !important;
     bottom: 25% !important;
+    user-select: none !important;
 
     & > li {
       height: 100% !important;
@@ -71,9 +78,15 @@
   background-color: var(--main-blue-color);
   color: white;
   transition: all 0.2s;
+  border-radius: 50px;
   &:hover {
     background-color: transparent;
     border: 1px solid var(--main-blue-color);
     color: var(--main-blue-color);
   }
+}
+
+.buttonGroup {
+  display: flex;
+  justify-content: space-between;
 }

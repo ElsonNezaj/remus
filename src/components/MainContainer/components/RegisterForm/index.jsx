@@ -1,7 +1,7 @@
 import React, { forwardRef, useRef } from "react";
 
 import styles from "./styles.module.scss";
-import { Button, Carousel, Form, Input } from "antd";
+import { Button, Carousel, Form, Input, Select } from "antd";
 
 export default function RegisterForm() {
   const ref = useRef();
@@ -12,12 +12,11 @@ export default function RegisterForm() {
           <Carousel
             ref={ref}
             autoplay={false}
-            dots
-            dotPosition="bottom"
+            dots={false}
             className={styles.carousel}
           >
             <StepOne ref={ref} />
-            <StepTwo />
+            <StepTwo ref={ref} />
           </Carousel>
         </>
       )}
@@ -27,24 +26,32 @@ export default function RegisterForm() {
 
 const StepOne = forwardRef(function StepOne(props, ref) {
   return (
-    <Form className={styles.registerForm}>
+    <Form
+      onSubmitCapture={() => {
+        ref.current?.next();
+      }}
+      className={styles.registerForm}
+    >
       <div className={styles.nameInputs}>
         <Input
+          required
           name="firstName"
-          placeholder="First Name"
+          placeholder={`First Name`}
           type="text"
           size="large"
           className={styles.registerInput}
         />
         <Input
+          required
           name="lastName"
-          placeholder=" Last Name"
+          placeholder="Last Name"
           type="text"
           size="large"
           className={styles.registerInput}
         />
       </div>
       <Input
+        required
         name="id"
         placeholder="ID / NIPT"
         type="text"
@@ -52,6 +59,7 @@ const StepOne = forwardRef(function StepOne(props, ref) {
         className={styles.registerInput}
       />
       <Input
+        required
         name="phone"
         placeholder="Phone Number"
         type="number"
@@ -59,6 +67,7 @@ const StepOne = forwardRef(function StepOne(props, ref) {
         className={styles.registerInput}
       />
       <Input
+        required
         name="email"
         placeholder="E-mail"
         type="email"
@@ -66,6 +75,7 @@ const StepOne = forwardRef(function StepOne(props, ref) {
         className={styles.registerInput}
       />
       <Input
+        required
         name="password"
         placeholder="Password"
         type="password"
@@ -73,25 +83,52 @@ const StepOne = forwardRef(function StepOne(props, ref) {
         className={styles.registerInput}
       />
       <Input
+        required
         // name="password"
         placeholder="Re-enter Password"
         type="password"
         size="large"
         className={styles.registerInput}
       />
-      <Button
-        onClick={() => {
-          ref.current?.next();
-        }}
-        type="round"
-        className={styles.submitButton}
-      >
-        Next Step
-      </Button>
+      <Input type="submit" value="Next Step" className={styles.submitButton} />
     </Form>
   );
 });
 
-const StepTwo = forwardRef(function StepTwo() {
-  return <p style={{ backgroundColor: "transparent" }}>Hello World</p>;
+const StepTwo = forwardRef(function StepTwo(props, ref) {
+  const businessOptions = [
+    { label: "Bar / Restaurant", value: "bar" },
+    { label: "Market", value: "market" },
+  ];
+  return (
+    <Form className={styles.registerForm}>
+      <Select
+        defaultValue="bar"
+        bordered
+        options={businessOptions}
+        size="large"
+        className={styles.selectBusiness}
+      />
+      <div className={styles.buttonGroup}>
+        <Button
+          onClick={() => {
+            ref.current?.prev();
+          }}
+          type="round"
+          className={styles.submitButton}
+        >
+          Back
+        </Button>
+        <Button
+          onClick={() => {
+            ref.current?.next();
+          }}
+          type="round"
+          className={styles.submitButton}
+        >
+          Next Step
+        </Button>
+      </div>
+    </Form>
+  );
 });
