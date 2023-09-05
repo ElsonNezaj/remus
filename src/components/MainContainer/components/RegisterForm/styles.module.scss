@@ -1,0 +1,79 @@
+.registerContainer {
+  width: 70%;
+  margin: 0 auto;
+  height: 100%;
+
+  & > div {
+    height: 100%;
+  }
+}
+.carousel {
+  height: 100%;
+
+  & > div {
+    height: 100%;
+
+    & > div {
+      height: 100%;
+    }
+  }
+
+  ul {
+    height: 10px !important;
+    bottom: 25% !important;
+
+    & > li {
+      height: 100% !important;
+      & > button {
+        border-radius: 10px !important;
+        height: 100% !important;
+        background-color: var(--main-blue-color) !important;
+      }
+    }
+  }
+}
+
+.registerForm {
+  width: 50%;
+  height: 100%;
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+  justify-content: center;
+}
+
+.nameInputs {
+  display: flex;
+  gap: 20px;
+}
+
+.registerInput {
+  background-color: transparent;
+  height: 50px;
+  font-size: 18px;
+  border: 1px solid var(--main-blue-color);
+  color: rgba(0, 0, 0, 0.711);
+
+  &:focus {
+    border-color: var(--main-yellow-color);
+  }
+  &::placeholder {
+    color: rgba(0, 0, 0, 0.4);
+  }
+}
+
+.submitButton {
+  width: 25%;
+  align-self: flex-end;
+  font-size: 18px;
+  height: 40px;
+  background-color: var(--main-blue-color);
+  color: white;
+  transition: all 0.2s;
+  &:hover {
+    background-color: transparent;
+    border: 1px solid var(--main-blue-color);
+    color: var(--main-blue-color);
+  }
+}
