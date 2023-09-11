@@ -7,6 +7,7 @@
 
 .contactInfo {
   width: 50%;
+  height: 100%;
 }
 
 .header {
@@ -24,6 +25,54 @@
     transition: width 0.2s ease-in;
     opacity: 0.4;
   }
+}
+
+.body {
+  height: 80%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 25px;
+}
+
+.contactBody {
+  width: 100%;
+  text-align: left;
+  display: flex;
+  justify-content: space-between;
+  position: relative;
+
+  &::after {
+    content: "";
+    display: block;
+    position: absolute;
+    width: 100%;
+    height: 2px;
+    background: var(--main-blue-color);
+    transition: width 0.2s ease-in;
+    opacity: 0.4;
+    top: 100%;
+  }
+}
+
+.bodyHeader {
+  font-size: 20px;
+  font-weight: bold;
+  font-style: italic;
+}
+
+.labelContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: end;
+}
+
+.label {
+  font-weight: bold;
+  font-size: 16px;
 }
 
 .appLogo {
