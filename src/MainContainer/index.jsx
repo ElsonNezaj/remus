@@ -1,10 +1,11 @@
 import React from "react";
 
 import styles from "./styles.module.scss";
-import HeaderContainer from "./components/Header/Container";
-import Landing from "./components/Landing";
+import HeaderContainer from "../components/Header/Container";
+import Landing from "../components/Landing";
 import { Route, Switch } from "react-router-dom";
-import RegisterForm from "./components/RegisterForm";
+import RegisterForm from "../components/Forms/RegisterForm";
+import Contact from "../components/Contacts";
 
 export default function MainContainer() {
   return (
@@ -19,6 +20,9 @@ export default function MainContainer() {
           </Route>
           <Route path="/register" exact>
             <RegisterForm />
+          </Route>
+          <Route path="/contact" exact>
+            <Contact />
           </Route>
         </Switch>
       </div>

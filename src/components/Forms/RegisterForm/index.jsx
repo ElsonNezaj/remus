@@ -80,6 +80,7 @@ const StepOne = forwardRef(function StepOne(props, ref) {
         placeholder="Password"
         type="password"
         size="large"
+        minLength={8}
         className={styles.registerInput}
       />
       <Input
@@ -88,6 +89,7 @@ const StepOne = forwardRef(function StepOne(props, ref) {
         placeholder="Re-enter Password"
         type="password"
         size="large"
+        minLength={8}
         className={styles.registerInput}
       />
       <Input type="submit" value="Next Step" className={styles.submitButton} />
@@ -95,7 +97,7 @@ const StepOne = forwardRef(function StepOne(props, ref) {
   );
 });
 
-const StepTwo = forwardRef(function StepTwo(props, ref) {
+const StepTwo = forwardRef(function StepTwo(ref) {
   const businessOptions = [
     { label: "Bar / Restaurant", value: "bar" },
     { label: "Market", value: "market" },

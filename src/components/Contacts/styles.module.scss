@@ -1,0 +1,40 @@
+.contactContainer {
+  height: 100%;
+  width: 70%;
+  margin: 0 auto;
+  display: flex;
+}
+
+.contactInfo {
+  width: 50%;
+}
+
+.header {
+  font-size: 20px;
+  font-weight: bold;
+  text-transform: uppercase;
+  color: var(--main-blue-color);
+
+  &::after {
+    content: "";
+    display: block;
+    width: 100%;
+    height: 2px;
+    background: var(--main-yellow-color);
+    transition: width 0.2s ease-in;
+    opacity: 0.4;
+  }
+}
+
+.appLogo {
+  width: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.verticalLogo {
+  width: 70%;
+  filter: brightness(0.8) blur(3px) contrast(0.1);
+  opacity: 0.3;
+}
