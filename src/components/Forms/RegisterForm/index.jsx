@@ -1,10 +1,38 @@
-import React, { forwardRef, useRef } from "react";
+import React, { forwardRef, useEffect, useRef, useState } from "react";
 
 import styles from "./styles.module.scss";
 import { Button, Carousel, Form, Input, Select } from "antd";
 
 export default function RegisterForm() {
   const ref = useRef();
+  const [registrationData, setRegistrationData] = useState({
+    firstName: "",
+    lastName: "",
+    id: "",
+    phone: undefined,
+    password: undefined,
+    confirmPassword: undefined,
+  });
+  const [disableNextStep, setDisableNextStep] = useState(false);
+
+  const handleChange = (name, value) => {
+    setRegistrationData({
+      ...registrationData,
+      [name]: value,
+    });
+  };
+
+  const findEmptyData = (data) => {
+    const isEmpty = Object.values(data).some(
+      (x) => x === undefined || x === ""
+    );
+    isEmpty ? setDisableNextStep(true) : setDisableNextStep(false);
+  };
+
+  useEffect(() => {
+    findEmptyData(registrationData);
+  }, [registrationData]);
+
   return (
     <div className={styles.registerContainer}>
       {ref && (
@@ -15,7 +43,12 @@ export default function RegisterForm() {
             dots={false}
             className={styles.carousel}
           >
-            <StepOne ref={ref} />
+            <StepOne
+              ref={ref}
+              handleChange={handleChange}
+              registrationData={registrationData}
+              disableNextStep={disableNextStep}
+            />
             <StepTwo ref={ref} />
           </Carousel>
         </>
@@ -25,6 +58,7 @@ export default function RegisterForm() {
 }
 
 const StepOne = forwardRef(function StepOne(props, ref) {
+  const { handleChange, registrationData, disableNextStep } = props;
   return (
     <Form
       onSubmitCapture={() => {
@@ -39,6 +73,7 @@ const StepOne = forwardRef(function StepOne(props, ref) {
           placeholder={`First Name`}
           type="text"
           size="large"
+          onChange={(e) => handleChange(e.target.name, e.target.value)}
           className={styles.registerInput}
         />
         <Input
@@ -47,6 +82,7 @@ const StepOne = forwardRef(function StepOne(props, ref) {
           placeholder="Last Name"
           type="text"
           size="large"
+          onChange={(e) => handleChange(e.target.name, e.target.value)}
           className={styles.registerInput}
         />
       </div>
@@ -56,6 +92,7 @@ const StepOne = forwardRef(function StepOne(props, ref) {
         placeholder="ID / NIPT"
         type="text"
         size="large"
+        onChange={(e) => handleChange(e.target.name, e.target.value)}
         className={styles.registerInput}
       />
       <Input
@@ -64,6 +101,7 @@ const StepOne = forwardRef(function StepOne(props, ref) {
         placeholder="Phone Number"
         type="number"
         size="large"
+        onChange={(e) => handleChange(e.target.name, e.target.value)}
         className={styles.registerInput}
       />
       <Input
@@ -72,6 +110,7 @@ const StepOne = forwardRef(function StepOne(props, ref) {
         placeholder="E-mail"
         type="email"
         size="large"
+        onChange={(e) => handleChange(e.target.name, e.target.value)}
         className={styles.registerInput}
       />
       <Input
@@ -81,23 +120,30 @@ const StepOne = forwardRef(function StepOne(props, ref) {
         type="password"
         size="large"
         minLength={8}
+        onChange={(e) => handleChange(e.target.name, e.target.value)}
         className={styles.registerInput}
       />
       <Input
         required
-        // name="password"
+        name="confirmPassword"
         placeholder="Re-enter Password"
         type="password"
         size="large"
         minLength={8}
+        onChange={(e) => handleChange(e.target.name, e.target.value)}
         className={styles.registerInput}
       />
-      <Input type="submit" value="Next Step" className={styles.submitButton} />
+      <Input
+        disabled={disableNextStep}
+        type="submit"
+        value="Next Step"
+        className={styles.submitButton}
+      />
     </Form>
   );
 });
 
-const StepTwo = forwardRef(function StepTwo(ref) {
+const StepTwo = forwardRef(function StepTwo(props, ref) {
   const businessOptions = [
     { label: "Bar / Restaurant", value: "bar" },
     { label: "Market", value: "market" },
