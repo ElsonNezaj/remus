@@ -12,6 +12,10 @@ export default function RegisterForm() {
     phone: undefined,
     password: undefined,
     confirmPassword: undefined,
+    business: {
+      type: "bar",
+      products: undefined,
+    },
   });
   const [disableNextStep, setDisableNextStep] = useState(false);
 
@@ -19,6 +23,24 @@ export default function RegisterForm() {
     setRegistrationData({
       ...registrationData,
       [name]: value,
+    });
+  };
+
+  const handleBusinessChange = (type) => {
+    setRegistrationData({
+      ...registrationData,
+      business: {
+        type: type,
+      },
+    });
+  };
+
+  const handleProducts = (prods) => {
+    setRegistrationData({
+      ...registrationData,
+      business: {
+        products: prods,
+      },
     });
   };
 
@@ -49,7 +71,8 @@ export default function RegisterForm() {
               registrationData={registrationData}
               disableNextStep={disableNextStep}
             />
-            <StepTwo ref={ref} />
+            <StepTwo ref={ref} handleBusinessChange={handleBusinessChange} />
+            <ProductsPage ref={ref} />
           </Carousel>
         </>
       )}
@@ -58,7 +81,7 @@ export default function RegisterForm() {
 }
 
 const StepOne = forwardRef(function StepOne(props, ref) {
-  const { handleChange, registrationData, disableNextStep } = props;
+  const { handleChange, disableNextStep } = props;
   return (
     <Form
       onSubmitCapture={() => {
@@ -148,6 +171,9 @@ const StepTwo = forwardRef(function StepTwo(props, ref) {
     { label: "Bar / Restaurant", value: "bar" },
     { label: "Market", value: "market" },
   ];
+
+  const { handleBusinessChange } = props;
+
   return (
     <Form className={styles.registerForm}>
       <Select
@@ -155,6 +181,7 @@ const StepTwo = forwardRef(function StepTwo(props, ref) {
         bordered
         options={businessOptions}
         size="large"
+        onChange={(e) => handleBusinessChange(e)}
         className={styles.selectBusiness}
       />
       <div className={styles.buttonGroup}>
@@ -178,5 +205,57 @@ const StepTwo = forwardRef(function StepTwo(props, ref) {
         </Button>
       </div>
     </Form>
+  );
+});
+
+const ProductsPage = forwardRef(function ProductsPage(props, ref) {
+  const allProducts = [];
+  const [currentProduct, setCurrentProduct] = useState({
+    name: "",
+    desc: "",
+    price: undefined,
+  });
+
+  const handleChange = (name, value) => {
+    setCurrentProduct({
+      ...currentProduct,
+      [name]: value,
+    });
+  };
+
+  return (
+    <div className={styles.addProductsContainer}>
+      <Form className={styles.addProductsForm}>
+        <Input
+          type="text"
+          name="name"
+          placeholder="Product Name"
+          size="large"
+          required
+        />
+        <Input
+          type="text"
+          name="desc"
+          placeholder="Product Description"
+          size="large"
+        />
+        <Input
+          type="number"
+          name="price"
+          placeholder="Product Price"
+          size="large"
+          required
+        />
+        <Button
+          // onClick={() => {
+          //   ref.current?.next();
+          // }}
+          type="round"
+          className={styles.submitButton}
+        >
+          Add Product
+        </Button>
+      </Form>
+    </div>
   );
 });
