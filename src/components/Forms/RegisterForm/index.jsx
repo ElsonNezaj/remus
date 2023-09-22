@@ -1,7 +1,7 @@
 import React, { forwardRef, useEffect, useRef, useState } from "react";
 
 import styles from "./styles.module.scss";
-import { Button, Carousel, Form, Input, Select } from "antd";
+import { Button, Carousel, Form, Input, Select, Typography } from "antd";
 
 export default function RegisterForm() {
   const ref = useRef();
@@ -14,7 +14,7 @@ export default function RegisterForm() {
     confirmPassword: undefined,
     business: {
       type: "bar",
-      products: undefined,
+      products: [],
     },
   });
   const [disableNextStep, setDisableNextStep] = useState(false);
@@ -31,6 +31,7 @@ export default function RegisterForm() {
       ...registrationData,
       business: {
         type: type,
+        products: [],
       },
     });
   };
@@ -39,6 +40,7 @@ export default function RegisterForm() {
     setRegistrationData({
       ...registrationData,
       business: {
+        type: registrationData.business.type,
         products: prods,
       },
     });
@@ -54,6 +56,8 @@ export default function RegisterForm() {
   useEffect(() => {
     findEmptyData(registrationData);
   }, [registrationData]);
+
+  console.log(registrationData);
 
   return (
     <div className={styles.registerContainer}>
@@ -72,7 +76,11 @@ export default function RegisterForm() {
               disableNextStep={disableNextStep}
             />
             <StepTwo ref={ref} handleBusinessChange={handleBusinessChange} />
-            <ProductsPage ref={ref} />
+            <ProductsPage
+              ref={ref}
+              handleProducts={handleProducts}
+              products={registrationData.business.products}
+            />
           </Carousel>
         </>
       )}
@@ -209,6 +217,7 @@ const StepTwo = forwardRef(function StepTwo(props, ref) {
 });
 
 const ProductsPage = forwardRef(function ProductsPage(props, ref) {
+  const { handleProducts, products } = props;
   const allProducts = [];
   const [currentProduct, setCurrentProduct] = useState({
     name: "",
@@ -223,39 +232,83 @@ const ProductsPage = forwardRef(function ProductsPage(props, ref) {
     });
   };
 
+  const handleAddButton = () => {
+    if (currentProduct.name.length > 0 && currentProduct.price) {
+      allProducts.push(currentProduct);
+      setCurrentProduct({
+        name: "",
+        desc: "",
+        price: undefined,
+      });
+    }
+  };
+
   return (
-    <div className={styles.addProductsContainer}>
-      <Form className={styles.addProductsForm}>
-        <Input
-          type="text"
-          name="name"
-          placeholder="Product Name"
-          size="large"
-          required
-        />
-        <Input
-          type="text"
-          name="desc"
-          placeholder="Product Description"
-          size="large"
-        />
-        <Input
-          type="number"
-          name="price"
-          placeholder="Product Price"
-          size="large"
-          required
-        />
+    <>
+      <div className={styles.addProductsContainer}>
+        <Form className={styles.addProductsForm}>
+          <Input
+            required
+            name="name"
+            placeholder="Name"
+            type="text"
+            size="large"
+            onChange={(e) => handleChange(e.target.name, e.target.value)}
+            className={styles.productInput}
+          />
+          <Input
+            required
+            name="desc"
+            placeholder="Product Description"
+            type="text"
+            size="large"
+            onChange={(e) => handleChange(e.target.name, e.target.value)}
+            className={styles.productInput}
+          />
+          <Input
+            required
+            name="price"
+            placeholder="Price"
+            type="number"
+            size="large"
+            onChange={(e) => handleChange(e.target.name, e.target.value)}
+            className={styles.productInput}
+          />
+          <Button
+            onClick={() => handleAddButton()}
+            type="round"
+            className={styles.submitButton}
+          >
+            Add Product
+          </Button>
+        </Form>
+      </div>
+      {products &&
+        products.map((product) => (
+          <div className={styles.productRow}>
+            <Typography>{product.name}</Typography>
+            <Typography>{product.desc}</Typography>
+            <Typography>{product.price}</Typography>
+          </div>
+        ))}
+      <div className={styles.buttonGroupFinal}>
         <Button
-          // onClick={() => {
-          //   ref.current?.next();
-          // }}
+          onClick={() => {
+            ref.current?.prev();
+          }}
           type="round"
           className={styles.submitButton}
         >
-          Add Product
+          Back
         </Button>
-      </Form>
-    </div>
+        <Button
+          type="round"
+          onClick={() => handleProducts(allProducts)}
+          className={styles.submitButton}
+        >
+          Finish
+        </Button>
+      </div>
+    </>
   );
 });
