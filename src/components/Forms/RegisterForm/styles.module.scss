@@ -99,6 +99,7 @@
   border: 1px solid var(--main-blue-color);
   padding: 10px;
   height: 80%;
+  position: relative;
 }
 
 .addProductsForm {
@@ -106,6 +107,35 @@
   display: flex;
   align-items: flex-end;
   gap: 40px;
+}
+
+.productsListContainer {
+  width: 100%;
+  height: 90%;
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.productRow {
+  width: 97%;
+  margin: 0 auto;
+  min-height: 50px;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  font-size: 23px !important;
+  border: solid 1px rgb(174, 174, 174);
+  background-color: white;
+  border-radius: 30px;
+}
+
+.productItemLabel {
+  font-size: 16px;
+  font-weight: bold;
 }
 
 .buttonGroupFinal {

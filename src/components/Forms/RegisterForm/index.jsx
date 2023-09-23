@@ -5,6 +5,7 @@ import { Button, Carousel, Form, Input, Select, Typography } from "antd";
 
 export default function RegisterForm() {
   const ref = useRef();
+  const [accountProducts, setAccountProducts] = useState([]);
   const [registrationData, setRegistrationData] = useState({
     firstName: "",
     lastName: "",
@@ -14,7 +15,7 @@ export default function RegisterForm() {
     confirmPassword: undefined,
     business: {
       type: "bar",
-      products: [],
+      products: accountProducts,
     },
   });
   const [disableNextStep, setDisableNextStep] = useState(false);
@@ -36,16 +37,6 @@ export default function RegisterForm() {
     });
   };
 
-  const handleProducts = (prods) => {
-    setRegistrationData({
-      ...registrationData,
-      business: {
-        type: registrationData.business.type,
-        products: prods,
-      },
-    });
-  };
-
   const findEmptyData = (data) => {
     const isEmpty = Object.values(data).some(
       (x) => x === undefined || x === ""
@@ -57,7 +48,9 @@ export default function RegisterForm() {
     findEmptyData(registrationData);
   }, [registrationData]);
 
-  console.log(registrationData);
+  useEffect(() => {
+    registrationData.business.products = accountProducts;
+  }, [registrationData.business, accountProducts]);
 
   return (
     <div className={styles.registerContainer}>
@@ -76,11 +69,7 @@ export default function RegisterForm() {
               disableNextStep={disableNextStep}
             />
             <StepTwo ref={ref} handleBusinessChange={handleBusinessChange} />
-            <ProductsPage
-              ref={ref}
-              handleProducts={handleProducts}
-              products={registrationData.business.products}
-            />
+            <ProductsPage ref={ref} handleProducts={setAccountProducts} />
           </Carousel>
         </>
       )}
@@ -217,8 +206,8 @@ const StepTwo = forwardRef(function StepTwo(props, ref) {
 });
 
 const ProductsPage = forwardRef(function ProductsPage(props, ref) {
-  const { handleProducts, products } = props;
-  const allProducts = [];
+  const { handleProducts } = props;
+  const [allProducts, setAllProducts] = useState([]);
   const [currentProduct, setCurrentProduct] = useState({
     name: "",
     desc: "",
@@ -233,14 +222,7 @@ const ProductsPage = forwardRef(function ProductsPage(props, ref) {
   };
 
   const handleAddButton = () => {
-    if (currentProduct.name.length > 0 && currentProduct.price) {
-      allProducts.push(currentProduct);
-      setCurrentProduct({
-        name: "",
-        desc: "",
-        price: undefined,
-      });
-    }
+    setAllProducts([...allProducts, currentProduct]);
   };
 
   return (
@@ -251,6 +233,7 @@ const ProductsPage = forwardRef(function ProductsPage(props, ref) {
             required
             name="name"
             placeholder="Name"
+            value={currentProduct.name}
             type="text"
             size="large"
             onChange={(e) => handleChange(e.target.name, e.target.value)}
@@ -259,6 +242,7 @@ const ProductsPage = forwardRef(function ProductsPage(props, ref) {
           <Input
             required
             name="desc"
+            value={currentProduct.desc}
             placeholder="Product Description"
             type="text"
             size="large"
@@ -268,10 +252,13 @@ const ProductsPage = forwardRef(function ProductsPage(props, ref) {
           <Input
             required
             name="price"
+            value={currentProduct.price}
             placeholder="Price"
             type="number"
             size="large"
-            onChange={(e) => handleChange(e.target.name, e.target.value)}
+            onChange={(e) =>
+              handleChange(e.target.name, Number(e.target.value))
+            }
             className={styles.productInput}
           />
           <Button
@@ -282,15 +269,23 @@ const ProductsPage = forwardRef(function ProductsPage(props, ref) {
             Add Product
           </Button>
         </Form>
+        <div className={styles.productsListContainer}>
+          {allProducts &&
+            allProducts.map((product, index) => (
+              <div className={styles.productRow}>
+                <Typography className={styles.productItemLabel}>
+                  {index + 1}.&nbsp;{product.name}
+                </Typography>
+                <Typography className={styles.productItemLabel}>
+                  {product.desc.length > 0 ? product.desc : "No description"}
+                </Typography>
+                <Typography className={styles.productItemLabel}>
+                  {product.price}&nbsp; LEK
+                </Typography>
+              </div>
+            ))}
+        </div>
       </div>
-      {products &&
-        products.map((product) => (
-          <div className={styles.productRow}>
-            <Typography>{product.name}</Typography>
-            <Typography>{product.desc}</Typography>
-            <Typography>{product.price}</Typography>
-          </div>
-        ))}
       <div className={styles.buttonGroupFinal}>
         <Button
           onClick={() => {
