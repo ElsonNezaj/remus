@@ -49,7 +49,8 @@
 }
 
 .productRow {
-  width: 97%;
+  width: 95%;
+  margin-right: 10px;
   margin: 0 auto;
   min-height: 50px;
   display: flex;
@@ -64,7 +65,8 @@
 .productItemLabel {
   font-size: 16px;
   font-weight: bold;
-  width: 33%;
+  width: 25%;
+  text-align: center;
 }
 
 .buttonGroupFinal {
@@ -80,4 +82,15 @@
 .productInput {
   border: solid 1px var(--main-blue-color);
   height: 50px;
+}
+
+.deleteContainer {
+  width: 25%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.deleteItemButton {
+  font-size: 13px;
 }

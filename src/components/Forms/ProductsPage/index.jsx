@@ -2,6 +2,8 @@ import React, { forwardRef, useState } from "react";
 import styles from "./styles.module.scss";
 import { Button, Form, Input, Typography } from "antd";
 
+import Trash from "../../../assets/icons/trash.svg";
+
 export const ProductsPage = forwardRef(function ProductsPage(props, ref) {
   const { handleProducts } = props;
   const [allProducts, setAllProducts] = useState([]);
@@ -17,6 +19,8 @@ export const ProductsPage = forwardRef(function ProductsPage(props, ref) {
       [name]: value,
     });
   };
+
+  const handleDeleteSingleItem = (index) => {};
 
   const handleAddButton = () => {
     setAllProducts([...allProducts, currentProduct]);
@@ -83,6 +87,16 @@ export const ProductsPage = forwardRef(function ProductsPage(props, ref) {
                 <Typography className={styles.productItemLabel}>
                   {product.price}&nbsp; LEK
                 </Typography>
+                <div className={styles.deleteContainer}>
+                  <Button
+                    danger
+                    onClick={() => handleDeleteSingleItem(index)}
+                    className={styles.deleteItemButton}
+                  >
+                    {/* <img src={Trash}></img> */}
+                    Delete
+                  </Button>
+                </div>
               </div>
             ))}
         </div>
