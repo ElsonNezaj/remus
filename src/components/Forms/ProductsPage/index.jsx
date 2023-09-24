@@ -2,8 +2,6 @@ import React, { forwardRef, useState } from "react";
 import styles from "./styles.module.scss";
 import { Button, Form, Input, Typography } from "antd";
 
-import Trash from "../../../assets/icons/trash.svg";
-
 export const ProductsPage = forwardRef(function ProductsPage(props, ref) {
   const { handleProducts } = props;
   const [allProducts, setAllProducts] = useState([]);
@@ -20,7 +18,11 @@ export const ProductsPage = forwardRef(function ProductsPage(props, ref) {
     });
   };
 
-  const handleDeleteSingleItem = (index) => {};
+  const handleDeleteSingleItem = (index) => {
+    const updatedItems = [...allProducts];
+    updatedItems.splice(index, 1);
+    setAllProducts(updatedItems);
+  };
 
   const handleAddButton = () => {
     setAllProducts([...allProducts, currentProduct]);
