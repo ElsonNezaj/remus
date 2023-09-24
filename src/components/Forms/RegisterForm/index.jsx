@@ -1,7 +1,8 @@
 import React, { forwardRef, useEffect, useRef, useState } from "react";
 
 import styles from "./styles.module.scss";
-import { Button, Carousel, Form, Input, Select, Typography } from "antd";
+import { Button, Carousel, Form, Input, Select } from "antd";
+import { ProductsPage } from "../ProductsPage";
 
 export default function RegisterForm() {
   const ref = useRef();
@@ -41,7 +42,9 @@ export default function RegisterForm() {
     const isEmpty = Object.values(data).some(
       (x) => x === undefined || x === ""
     );
-    isEmpty ? setDisableNextStep(true) : setDisableNextStep(false);
+    isEmpty || registrationData.password !== registrationData.confirmPassword
+      ? setDisableNextStep(true)
+      : setDisableNextStep(false);
   };
 
   useEffect(() => {
@@ -65,7 +68,6 @@ export default function RegisterForm() {
             <StepOne
               ref={ref}
               handleChange={handleChange}
-              registrationData={registrationData}
               disableNextStep={disableNextStep}
             />
             <StepTwo ref={ref} handleBusinessChange={handleBusinessChange} />
@@ -202,108 +204,5 @@ const StepTwo = forwardRef(function StepTwo(props, ref) {
         </Button>
       </div>
     </Form>
-  );
-});
-
-const ProductsPage = forwardRef(function ProductsPage(props, ref) {
-  const { handleProducts } = props;
-  const [allProducts, setAllProducts] = useState([]);
-  const [currentProduct, setCurrentProduct] = useState({
-    name: "",
-    desc: "",
-    price: undefined,
-  });
-
-  const handleChange = (name, value) => {
-    setCurrentProduct({
-      ...currentProduct,
-      [name]: value,
-    });
-  };
-
-  const handleAddButton = () => {
-    setAllProducts([...allProducts, currentProduct]);
-  };
-
-  return (
-    <>
-      <div className={styles.addProductsContainer}>
-        <Form className={styles.addProductsForm}>
-          <Input
-            required
-            name="name"
-            placeholder="Name"
-            value={currentProduct.name}
-            type="text"
-            size="large"
-            onChange={(e) => handleChange(e.target.name, e.target.value)}
-            className={styles.productInput}
-          />
-          <Input
-            required
-            name="desc"
-            value={currentProduct.desc}
-            placeholder="Product Description"
-            type="text"
-            size="large"
-            onChange={(e) => handleChange(e.target.name, e.target.value)}
-            className={styles.productInput}
-          />
-          <Input
-            required
-            name="price"
-            value={currentProduct.price}
-            placeholder="Price"
-            type="number"
-            size="large"
-            onChange={(e) =>
-              handleChange(e.target.name, Number(e.target.value))
-            }
-            className={styles.productInput}
-          />
-          <Button
-            onClick={() => handleAddButton()}
-            type="round"
-            className={styles.submitButton}
-          >
-            Add Product
-          </Button>
-        </Form>
-        <div className={styles.productsListContainer}>
-          {allProducts &&
-            allProducts.map((product, index) => (
-              <div className={styles.productRow}>
-                <Typography className={styles.productItemLabel}>
-                  {index + 1}.&nbsp;{product.name}
-                </Typography>
-                <Typography className={styles.productItemLabel}>
-                  {product.desc.length > 0 ? product.desc : "No description"}
-                </Typography>
-                <Typography className={styles.productItemLabel}>
-                  {product.price}&nbsp; LEK
-                </Typography>
-              </div>
-            ))}
-        </div>
-      </div>
-      <div className={styles.buttonGroupFinal}>
-        <Button
-          onClick={() => {
-            ref.current?.prev();
-          }}
-          type="round"
-          className={styles.submitButton}
-        >
-          Back
-        </Button>
-        <Button
-          type="round"
-          onClick={() => handleProducts(allProducts)}
-          className={styles.submitButton}
-        >
-          Finish
-        </Button>
-      </div>
-    </>
   );
 });
